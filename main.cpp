@@ -1,18 +1,16 @@
 // Include standard headers
-#include <stdio.h>
-#include <stdlib.h>
+#include <cstdio>
+#include <cstdlib>
 
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_opengles2.h>
-//glGenVertexArrays()
-//#include <GLES3/gl3.h>
-#include <../common/shader.hpp>
+#include "shader.hpp"
 
 SDL_Window* window;
 
 int main( void )
 {
-	// Initialise GLFW
+	// Initialise SDL2
 	if( SDL_Init(SDL_INIT_VIDEO) < 0 )
 	{
 		fprintf( stderr, "Failed to initialize SDL\n" );
@@ -23,7 +21,7 @@ int main( void )
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 0);
 
 	// Open a window and create its OpenGL context
-	window = SDL_CreateWindow("Tutorial01",
+	window = SDL_CreateWindow("Tutorial",
 	SDL_WINDOWPOS_UNDEFINED,
 	SDL_WINDOWPOS_UNDEFINED,
 	800, 800,
@@ -31,16 +29,14 @@ int main( void )
 	
 	if (!window)
 	{
-		SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "Error",
-								 "Couldn't create the main window.", NULL);
+		SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "Error", "Couldn't create the main window.", NULL);
 		return EXIT_FAILURE;
 	}
 	
 	SDL_GLContext context = SDL_GL_CreateContext(window);
 	if (!context)
 	{
-		SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "Error",
-								 "Couldn't create an OpenGL context.", NULL);
+		SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "Error", "Couldn't create an OpenGL context.", NULL);
 		return EXIT_FAILURE;
 	}
 
@@ -53,7 +49,6 @@ int main( void )
 	//glBindVertexArray(VertexArrayID);
 
 	// Create and compile our GLSL program from the shaders
-	//S 
 	GLuint programID = LoadShaders( "SimpleVertexShader.vertexshader", "SimpleFragmentShader.fragmentshader" );
 
 	static const GLfloat g_vertex_buffer_data[] = { 
@@ -83,7 +78,6 @@ int main( void )
 		glClear( GL_COLOR_BUFFER_BIT );
 
 		// Use our shader
-		//S 
 		glUseProgram(programID);
 
 		// 1rst attribute buffer : vertices
@@ -108,10 +102,9 @@ int main( void )
 	// Cleanup VBO
 	glDeleteBuffers(1, &vertexbuffer);
 	//glDeleteVertexArrays(1, &VertexArrayID);
-	//S 
 	glDeleteProgram(programID);
 
-	// Close OpenGL window and terminate GLFW
+	// Close OpenGL window and terminate SDL2
 	SDL_GL_DeleteContext(context);
 	SDL_DestroyWindow(window);
 	SDL_Quit();
