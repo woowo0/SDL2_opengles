@@ -43,7 +43,7 @@ int main( void )
 	// Dark blue background
 	glClearColor(0.0f, 0.0f, 0.4f, 0.0f);
 
-	/*VAO*/
+	/* VAO */
 	//GLuint VertexArrayID;
 	//glGenVertexArrays(1, &VertexArrayID);
 	//glBindVertexArray(VertexArrayID);
@@ -101,6 +101,7 @@ int main( void )
 
 	// Cleanup VBO
 	glDeleteBuffers(1, &vertexbuffer);
+	/* VAO */
 	//glDeleteVertexArrays(1, &VertexArrayID);
 	glDeleteProgram(programID);
 
